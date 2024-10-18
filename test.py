@@ -1,25 +1,22 @@
+import panel as pn
+import hvplot.pandas as hvplot
+import pandas as pd
 from sqlalchemy import create_engine
-from dotenv import load_dotenv
-import os
 
-# Load environment variables from .env file
-load_dotenv()
+# Connect to your database
+engine = create_engine('sqlite:///your_database.db')
 
-db_host = os.getenv('DB_HOST')
-db_user = os.getenv('DB_USER')
-db_password = os.getenv('DB_PASSWORD')
-db_name = os.getenv('DB_NAME')
+# Query the database
+query = "SELECT * FROM your_table"
+df = pd.read_sql(query, engine)
 
-# Correct the connection string
-connection_url = f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
+# Create a simple panel dashboard
+pn.extension()
+dashboard = pn.Column(
+    pn.Row(
+        pn.panel(df.hvplot())
+    )
+)
 
-engine = create_engine(connection_url)
-
-# Test the connection
-try:
-    with engine.connect() as connection:
-        result = connection.execute(text("SHOW TABLES"))
-        for row in result:
-            print(row)
-except Exception as e:
-    print(f"Error: {e}")
+# Display the dashboard
+dashboard.servable()
