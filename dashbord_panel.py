@@ -35,7 +35,7 @@ dashboard = pn.Column(
     pn.Row(
         df.hvplot.table(width=800, height=600, border=0)  # Create an hvplot table without default border
     ),
-    sizing_mode="stretch_both"  # Stretch the layout to fit the entire screen
+    sizing_mode="stretch_both" 
 )
 
 # Custom CSS for background color (watermark effect) and table border

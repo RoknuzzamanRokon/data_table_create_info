@@ -1,0 +1,5 @@
+
+table_1 = "vervotech_hotel_map_new"
+table_2 = "vervotech_hotel_map_update"
+table_3 = "vervotech_mapping"
+table_4 = "vervotech_update_data_info"
