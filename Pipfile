@@ -12,6 +12,7 @@ pandas = "*"
 hvplot = "*"
 matplotlib = "*"
 numpy = "*"
+flask = "*"
 
 [dev-packages]
 
