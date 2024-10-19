@@ -3,37 +3,34 @@ from dotenv import load_dotenv
 import os
 import panel as pn
 import pandas as pd
-import hvplot.pandas
 
-# Load environment variables
+
 load_dotenv()
 
-# Database connection information from environment variables
 db_host = os.getenv('DB_HOST')
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 db_name = os.getenv('DB_NAME')
 
 # Table names
-table_1 = "vervotech_hotel_map_new"
+table_1 = "vervotech_update_data_info"
 
 # Create the connection URL
 connection_url = f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
 engine = create_engine(connection_url)
 
-# Query the database
 query = f"SELECT * FROM {table_1}"
 df = pd.read_sql(query, engine)
 
 # Initialize the Panel extension
-pn.extension(sizing_mode="stretch_both")  # Enable full screen sizing
+pn.extension(sizing_mode="stretch_both")  
 
 # Create the dashboard layout with a heading and padding
 dashboard = pn.Column(
-    pn.pane.Markdown("## Table all information", align="center", margin=(0, 0, 30, 0)),  # Add heading with 30px bottom margin
+    pn.pane.Markdown("# Table all information", align="center", margin=(0, 0, 30, 0)), 
     pn.Spacer(height=30),  # Spacer for 30px padding between heading and table
     pn.Row(
-        df.hvplot.table(width=800, height=600, border=0)  # Create an hvplot table without default border
+        df.hvplot.table(width=1300, height=550, border=1)  
     ),
     sizing_mode="stretch_both" 
 )

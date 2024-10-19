@@ -77,11 +77,18 @@ def new_data_latest_update_dataTime(table, engine):
     return latest_dateTime
 
 
-def new_total_data_count_vervotech_mapping_using_last_update(table, engine):
+def new_total_data_count_vervotech_mapping_using_last_update_field(table, engine):
     query = f"SELECT COUNT(*) FROM {table} WHERE last_update = (SELECT MAX(last_update) FROM {table});"
     df = pd.read_sql(query, engine)
     total_data = df.iloc[0, 0]
     return total_data
+
+def live_data_uploading_function(table, engine):
+    query = f"SELECT COUNT(*) FROM {table} WHERE content_update_status = 'Done';"
+    df = pd.read_sql(query, engine)
+    response_data = df.iloc[0, 0]
+    return response_data
+
 
 
 def data_insert_infoTable(data_dict, engine):
@@ -134,7 +141,10 @@ data['vh_update_newFile_lastUpdate_dateTime']= new_data_latest_update_dataTime(t
 
 # vervotech mapping table information section ------------------------------------- (vervotech_mapping Table)
 data['vh_mapping_total'] = total_data_count(table="vervotech_mapping", engine=engine)
-data['vh_mapping_newFile'] = new_total_data_count_vervotech_mapping_using_last_update(table="vervotech_mapping", engine=engine)
+data['vh_mapping_newFile'] = new_total_data_count_vervotech_mapping_using_last_update_field(table="vervotech_mapping", engine=engine)
+
+# ------------------------------ Live data content update status for vervotech mapping table ---------------------------------
+data['contentUpdatingStatus'] = live_data_uploading_function(table="vervotech_mapping", engine=engine)
 
 # Insert all the data into a single row in the table
 data_insert_infoTable(data, engine)
