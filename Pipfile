@@ -11,6 +11,7 @@ panel = "*"
 pandas = "*"
 hvplot = "*"
 matplotlib = "*"
+numpy = "*"
 
 [dev-packages]
 
