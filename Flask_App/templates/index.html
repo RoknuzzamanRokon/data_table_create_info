@@ -52,16 +52,21 @@
   </head>
   <body>
     <div class="container">
-      <h1>Vervotech Data Overview</h1>
-
-      <h2>Live Updates</h2>
-      <div>
-        <p>Total Done: <span id="total-done">{{ live_updates.count }}</span></p>
-        <p>
-          Last Update:
-          <span id="last-update">{{ live_updates.last_update }}</span>
-        </p>
-      </div>
+      <h2>Content update vervotech table ----Live Updates</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Total Done</th>
+            <th>Last Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="total-done">{{ live_updates.count }}</td>
+            <td id="last-update">{{ live_updates.last_update }}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <h2>Vervotech New Data</h2>
       <table>
