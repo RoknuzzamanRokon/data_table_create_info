@@ -33,8 +33,8 @@ def new_total_data_count_using_create_at(table, engine):
     query = f"""
     SELECT COUNT(*) 
     FROM {table} 
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d %%H:%%i') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d %%H:%%i') 
+    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
+            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
             FROM {table}
             );
     """
@@ -47,8 +47,8 @@ def new_total_update_success_data_count_using_create_at(table, engine):
     query = f"""
     SELECT COUNT(CASE WHEN status = 'Update data successful' THEN 1 END) AS update_data_successful_count
     FROM {table}
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d %%H:%%i') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d %%H:%%i') 
+    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
+            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
             FROM {table}
             );
     """
@@ -61,8 +61,8 @@ def new_total_update_skipping_data_count_using_create_at(table, engine):
     query = f"""
     SELECT COUNT(CASE WHEN status = 'Skipping data' THEN 1 END) AS skipping_data_count
     FROM {table}
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d %%H:%%i') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d %%H:%%i') 
+    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
+            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
             FROM {table}
             );
     """
@@ -79,10 +79,12 @@ def new_data_latest_update_dataTime(table, engine):
 
 def new_total_data_count_vervotech_mapping_using_last_update_field(table, engine):
     query = f"""
-    SELECT COUNT(*)  
+    SELECT COUNT(*) 
     FROM {table} 
-    WHERE last_update = (SELECT MAX(last_update) FROM {table})
-       OR last_update = (SELECT MAX(last_update) FROM {table} WHERE last_update < (SELECT MAX(last_update) FROM {table}));
+    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
+            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
+            FROM {table}
+            );
     """
     df = pd.read_sql(query, engine)
     total_data = df.iloc[0, 0]  
