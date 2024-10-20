@@ -17,8 +17,12 @@ engine = create_engine(DATABASE_URL)
 
 @app.route('/')
 def index():
-    latest_record = fetch_latest_record(engine)  # Fetch the latest record
-    live_updates = live_data_uploading_function(table='vervotech_mapping', engine=engine)  # Fetch live updates
+    latest_record = fetch_latest_record(engine)
+    latest_record['vh_new_newFile_updateSuccess'] = int(latest_record['vh_new_newFile_updateSuccess'])
+    latest_record['vh_new_newFile_updateSkipping'] = int(latest_record['vh_new_newFile_updateSkipping'])
+    latest_record['vh_update_newFile_updateSuccess'] = int(latest_record['vh_update_newFile_updateSuccess'])
+    latest_record['vh_update_newFile_updateSkipping'] = int(latest_record['vh_update_newFile_updateSkipping'])
+    live_updates = live_data_uploading_function(table='vervotech_mapping', engine=engine) 
     return render_template('index.html', latest_record=latest_record, live_updates=live_updates)
 
 @app.route('/live_updates')
@@ -35,7 +39,7 @@ def fetch_latest_record(engine):
         
         with engine.connect() as connection:
             result = connection.execute(query)
-            latest_record = result.fetchone()  # Fetch the first (and only) result
+            latest_record = result.fetchone()  
             
             if latest_record is not None:
                 record_dict = {
@@ -56,6 +60,7 @@ def fetch_latest_record(engine):
                     'ModifiedOn': latest_record[14],
                     'contentUpdatingStatus': latest_record[15]
                 }
+
                 return record_dict
             else:
                 return None
@@ -73,13 +78,14 @@ def live_data_uploading_function(table, engine):
             if latest_record:
                 return {
                     'count': latest_record[0], 
-                    'last_update': latest_record[1].strftime('%Y-%m-%d %H:%M:%S')  # Format datetime
+                    'last_update': latest_record[1].strftime('%Y-%m-%d %H:%M:%S')  
                 }
             else:
                 return {'count': 0, 'last_update': None}
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
+
 
 
 if __name__ == '__main__':

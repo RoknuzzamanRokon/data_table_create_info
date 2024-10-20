@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
+    padding: 40px;
 }
 
 .container {
@@ -20,6 +20,7 @@ h2 {
 }
 
 table {
+    padding: 40px;
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;

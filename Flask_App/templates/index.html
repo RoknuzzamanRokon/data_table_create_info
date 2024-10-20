@@ -8,26 +8,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-      }
-      th,
-      td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-    </style>
+
     <script>
       async function fetchLiveUpdates() {
         try {
@@ -46,12 +27,16 @@
         }
       }
 
-      // Fetch live updates every 3 seconds
-      setInterval(fetchLiveUpdates, 3000);
+      setInterval(fetchLiveUpdates, 3600000);
+
+      setInterval(() => {
+        location.reload();
+      }, 3600000);  
     </script>
   </head>
   <body>
     <div class="container">
+      <h1>Latest Record from Database</h1>
       <h2>Content update vervotech table ----Live Updates</h2>
       <table>
         <thead>
@@ -74,15 +59,23 @@
           <tr>
             <th>Total</th>
             <th>New</th>
+            <th>Processing</th>
             <th>Update Success</th>
             <th>Skipping Data</th>
-            <th>DateTime</th>
+            <th>Last Update</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{{ latest_record.vh_new_total }}</td>
             <td>{{ latest_record.vh_new_newFile }}</td>
+            <td>
+              {% if latest_record.vh_new_newFile_updateSuccess == 0 and latest_record.vh_new_newFile_updateSkipping == 0 %}
+                  {{ latest_record.vh_new_newFile }}
+              {% else %}
+                  0
+              {% endif %}
+            </td>
             <td>{{ latest_record.vh_new_newFile_updateSuccess }}</td>
             <td>{{ latest_record.vh_new_newFile_updateSkipping }}</td>
             <td>{{ latest_record.vh_new_newFile_lastUpdate_dateTime }}</td>
@@ -93,24 +86,32 @@
       <h2>Vervotech Update Data</h2>
       <table>
         <thead>
-          <tr>
-            <th>Total</th>
-            <th>Update New</th>
-            <th>Update Success</th>
-            <th>Skipping Data</th>
-            <th>DateTime</th>
-          </tr>
+            <tr>
+                <th>Total</th>
+                <th>Update New</th>
+                <th>Processing</th>
+                <th>Update Success</th>
+                <th>Skipping Data</th>
+                <th>Last Update</th>
+            </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{{ latest_record.vh_update_total }}</td>
-            <td>{{ latest_record.vh_update_newFile }}</td>
-            <td>{{ latest_record.vh_update_newFile_updateSuccess }}</td>
-            <td>{{ latest_record.vh_update_newFile_updateSkipping }}</td>
-            <td>{{ latest_record.vh_update_newFile_lastUpdate_dateTime }}</td>
-          </tr>
+            <tr>
+                <td>{{ latest_record.vh_update_total }}</td>
+                <td>{{ latest_record.vh_update_newFile }}</td>
+                <td>
+                  {% if latest_record.vh_update_newFile_updateSuccess == 0 and latest_record.vh_update_newFile_updateSkipping == 0 %}
+                      {{ latest_record.vh_update_newFile }}
+                  {% else %}
+                      0 
+                  {% endif %}
+                </td>
+                <td>{{ latest_record.vh_update_newFile_updateSuccess }}</td>
+                <td>{{ latest_record.vh_update_newFile_updateSkipping }}</td>
+                <td>{{ latest_record.vh_update_newFile_lastUpdate_dateTime }}</td>
+            </tr>
         </tbody>
-      </table>
+    </table>
 
       <h2>Vervotech Mapping</h2>
       <table>
@@ -118,12 +119,14 @@
           <tr>
             <th>Total</th>
             <th>New Update</th>
+            <th>Last Update</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{{ latest_record.vh_mapping_total }}</td>
             <td>{{ latest_record.vh_mapping_newFile }}</td>
+            <td>{{ latest_record.ModifiedOn }}</td>
           </tr>
         </tbody>
       </table>
