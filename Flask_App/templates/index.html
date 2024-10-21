@@ -118,7 +118,8 @@
         <thead>
           <tr>
             <th>Total</th>
-            <th>New Update</th>
+            <th>New Data</th>
+            <th>Update Data</th>
             <th>Last Update</th>
           </tr>
         </thead>
@@ -126,6 +127,7 @@
           <tr>
             <td>{{ latest_record.vh_mapping_total }}</td>
             <td>{{ latest_record.vh_mapping_newFile }}</td>
+            <td>{{ (latest_record.vh_update_newFile_updateSuccess + latest_record.vh_new_newFile_updateSuccess) - latest_record.vh_mapping_newFile }}</td>
             <td>{{ latest_record.ModifiedOn }}</td>
           </tr>
         </tbody>

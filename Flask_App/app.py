@@ -22,6 +22,8 @@ def index():
     latest_record['vh_new_newFile_updateSkipping'] = int(latest_record['vh_new_newFile_updateSkipping'])
     latest_record['vh_update_newFile_updateSuccess'] = int(latest_record['vh_update_newFile_updateSuccess'])
     latest_record['vh_update_newFile_updateSkipping'] = int(latest_record['vh_update_newFile_updateSkipping'])
+    latest_record['vh_mapping_newFile'] = int(latest_record['vh_mapping_newFile'])
+    
     live_updates = live_data_uploading_function(table='vervotech_mapping', engine=engine) 
     return render_template('index.html', latest_record=latest_record, live_updates=live_updates)
 
