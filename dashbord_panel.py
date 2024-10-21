@@ -28,14 +28,13 @@ pn.extension(sizing_mode="stretch_both")
 # Create the dashboard layout with a heading and padding
 dashboard = pn.Column(
     pn.pane.Markdown("# Table all information", align="center", margin=(0, 0, 30, 0)), 
-    pn.Spacer(height=30),  # Spacer for 30px padding between heading and table
+    pn.Spacer(height=30),  
     pn.Row(
         df.hvplot.table(width=1300, height=550, border=1)  
     ),
     sizing_mode="stretch_both" 
 )
 
-# Custom CSS for background color (watermark effect) and table border
 css = """
 .bk.pn-Column {
     background-color: rgba(0, 128, 255, 0.1);  /* Light blue background with transparency */
@@ -54,8 +53,6 @@ css = """
 }
 """
 
-# Apply custom CSS
 pn.config.raw_css.append(css)
 
-# Serve the dashboard
-dashboard.show()  # This will open it in the default browser
+dashboard.show() 
