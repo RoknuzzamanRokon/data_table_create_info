@@ -20,7 +20,6 @@ h2 {
 }
 
 table {
-    padding: 40px;
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -35,4 +34,36 @@ td {
 
 th {
     background-color: #f2f2f2;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+
+    .container {
+        padding: 10px; /* Reduce padding inside the container */
+    }
+
+    table {
+        padding: 0; /* Remove padding from table for better spacing */
+    }
+
+    th,
+    td {
+        padding: 8px; /* Slightly reduce padding in table cells */
+    }
+}
+
+@media (max-width: 480px) {
+    h1,
+    h2 {
+        font-size: 1.5em; /* Adjust heading size for small screens */
+    }
+
+    th,
+    td {
+        font-size: 0.9em; /* Reduce font size for table cells */
+    }
 }

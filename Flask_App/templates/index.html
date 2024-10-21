@@ -127,7 +127,13 @@
           <tr>
             <td>{{ latest_record.vh_mapping_total }}</td>
             <td>{{ latest_record.vh_mapping_newFile }}</td>
-            <td>{{ (latest_record.vh_update_newFile_updateSuccess + latest_record.vh_new_newFile_updateSuccess) - latest_record.vh_mapping_newFile }}</td>
+            <td>{% set total_update_success = latest_record.vh_update_newFile_updateSuccess + latest_record.vh_new_newFile_updateSuccess %}
+              {% if total_update_success - latest_record.vh_mapping_newFile < 0 %}
+                  {{ latest_record.vh_new_newFile_updateSuccess }}
+              {% else %}
+                  {{ total_update_success - latest_record.vh_mapping_newFile }}
+              {% endif %}
+            </td>
             <td>{{ latest_record.ModifiedOn }}</td>
           </tr>
         </tbody>
