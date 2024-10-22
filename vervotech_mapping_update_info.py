@@ -33,17 +33,10 @@ def new_total_data_count_using_create_at(table, engine):
     query = f"""
     SELECT COUNT(*) 
     FROM {table} 
-<<<<<<< HEAD
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
-            FROM {table}
-            );
-=======
     WHERE DATE(created_at) = (
         SELECT DATE(MAX(created_at)) 
         FROM {table}
     );
->>>>>>> d4a90520ea550a03bdb412da58c230119d9dcde4
     """
     df = pd.read_sql(query, engine)
     total_data = df.iloc[0, 0]
@@ -52,14 +45,6 @@ def new_total_data_count_using_create_at(table, engine):
 
 def new_total_update_success_data_count_using_create_at(table, engine):
     query = f"""
-<<<<<<< HEAD
-    SELECT COUNT(CASE WHEN status = 'Update data successful' THEN 1 END) AS update_data_successful_count
-    FROM {table}
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
-            FROM {table}
-            );
-=======
     SELECT COUNT(*) 
     FROM {table} 
     WHERE DATE(created_at) = (
@@ -67,7 +52,6 @@ def new_total_update_success_data_count_using_create_at(table, engine):
         FROM {table}
     )
     AND status = 'Update data successful';
->>>>>>> d4a90520ea550a03bdb412da58c230119d9dcde4
     """
     df = pd.read_sql(query, engine)
     update_data_successful_count = df.iloc[0, 0]
@@ -76,14 +60,6 @@ def new_total_update_success_data_count_using_create_at(table, engine):
 
 def new_total_update_skipping_data_count_using_create_at(table, engine):
     query = f"""
-<<<<<<< HEAD
-    SELECT COUNT(CASE WHEN status = 'Skipping data' THEN 1 END) AS skipping_data_count
-    FROM {table}
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
-            FROM {table}
-            );
-=======
     SELECT COUNT(*) 
     FROM {table} 
     WHERE DATE(created_at) = (
@@ -91,7 +67,6 @@ def new_total_update_skipping_data_count_using_create_at(table, engine):
         FROM {table}
     )
     AND status = 'Skipping data';
->>>>>>> d4a90520ea550a03bdb412da58c230119d9dcde4
     """
     df = pd.read_sql(query, engine)
     skipping_data_count = df.iloc[0, 0]
@@ -106,12 +81,10 @@ def new_data_latest_update_dataTime(table, engine):
 
 def new_total_data_count_vervotech_mapping_using_last_update_field(table, engine):
     query = f"""
-    SELECT COUNT(*) 
+    SELECT COUNT(*)  
     FROM {table} 
-    WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
-            SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
-            FROM {table}
-            );
+    WHERE last_update = (SELECT MAX(last_update) FROM {table})
+       OR last_update = (SELECT MAX(last_update) FROM {table} WHERE last_update < (SELECT MAX(last_update) FROM {table}));
     """
     df = pd.read_sql(query, engine)
     total_data = df.iloc[0, 0]  
@@ -126,6 +99,20 @@ def live_data_uploading_function(table, engine):
     return response_data
 
 
+def get_updateData_from_lastDate_select_tableAndColumn(table, column, value, engine):
+    # query = f"SELECT COUNT(*) FROM {table} WHERE created_at = (SELECT MAX(created_at) FROM {table}) AND {column} = '{value}';"
+    query = f"""
+    SELECT COUNT(*) 
+    FROM {table} 
+    WHERE DATE(created_at) = (
+        SELECT DATE(MAX(created_at)) 
+        FROM {table}
+    )
+    AND {column} = '{value}';
+    """
+    df = pd.read_csv(query=query,engine=engine)
+    response_data = df.iloc[0, 0]
+    return response_data
 
 def data_insert_infoTable(data_dict, engine):
     """
@@ -181,6 +168,16 @@ data['vh_mapping_newFile'] = new_total_data_count_vervotech_mapping_using_last_u
 
 # ------------------------------ Live data content update status for vervotech mapping table ---------------------------------
 data['contentUpdatingStatus'] = live_data_uploading_function(table="vervotech_mapping", engine=engine)
+
+
+# ------------------------------ Get Agoda And Hotelbed hotelInformation.
+data
+
+
+
+
+
+
 
 # Insert all the data into a single row in the table
 data_insert_infoTable(data, engine)
