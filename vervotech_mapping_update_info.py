@@ -33,10 +33,17 @@ def new_total_data_count_using_create_at(table, engine):
     query = f"""
     SELECT COUNT(*) 
     FROM {table} 
+<<<<<<< HEAD
     WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
             SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
             FROM {table}
             );
+=======
+    WHERE DATE(created_at) = (
+        SELECT DATE(MAX(created_at)) 
+        FROM {table}
+    );
+>>>>>>> d4a90520ea550a03bdb412da58c230119d9dcde4
     """
     df = pd.read_sql(query, engine)
     total_data = df.iloc[0, 0]
@@ -45,12 +52,22 @@ def new_total_data_count_using_create_at(table, engine):
 
 def new_total_update_success_data_count_using_create_at(table, engine):
     query = f"""
+<<<<<<< HEAD
     SELECT COUNT(CASE WHEN status = 'Update data successful' THEN 1 END) AS update_data_successful_count
     FROM {table}
     WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
             SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
             FROM {table}
             );
+=======
+    SELECT COUNT(*) 
+    FROM {table} 
+    WHERE DATE(created_at) = (
+        SELECT DATE(MAX(created_at)) 
+        FROM {table}
+    )
+    AND status = 'Update data successful';
+>>>>>>> d4a90520ea550a03bdb412da58c230119d9dcde4
     """
     df = pd.read_sql(query, engine)
     update_data_successful_count = df.iloc[0, 0]
@@ -59,12 +76,22 @@ def new_total_update_success_data_count_using_create_at(table, engine):
 
 def new_total_update_skipping_data_count_using_create_at(table, engine):
     query = f"""
+<<<<<<< HEAD
     SELECT COUNT(CASE WHEN status = 'Skipping data' THEN 1 END) AS skipping_data_count
     FROM {table}
     WHERE DATE_FORMAT(created_at, '%%Y-%%m-%%d') = (
             SELECT DATE_FORMAT(MAX(created_at), '%%Y-%%m-%%d') 
             FROM {table}
             );
+=======
+    SELECT COUNT(*) 
+    FROM {table} 
+    WHERE DATE(created_at) = (
+        SELECT DATE(MAX(created_at)) 
+        FROM {table}
+    )
+    AND status = 'Skipping data';
+>>>>>>> d4a90520ea550a03bdb412da58c230119d9dcde4
     """
     df = pd.read_sql(query, engine)
     skipping_data_count = df.iloc[0, 0]
@@ -89,6 +116,7 @@ def new_total_data_count_vervotech_mapping_using_last_update_field(table, engine
     df = pd.read_sql(query, engine)
     total_data = df.iloc[0, 0]  
     return total_data
+
 
 
 def live_data_uploading_function(table, engine):
