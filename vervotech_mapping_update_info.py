@@ -99,6 +99,20 @@ def live_data_uploading_function(table, engine):
     return response_data
 
 
+def get_updateData_from_lastDate_select_tableAndColumn(table, column, value, engine):
+    # query = f"SELECT COUNT(*) FROM {table} WHERE created_at = (SELECT MAX(created_at) FROM {table}) AND {column} = '{value}';"
+    query = f"""
+    SELECT COUNT(*) 
+    FROM {table} 
+    WHERE DATE(created_at) = (
+        SELECT DATE(MAX(created_at)) 
+        FROM {table}
+    )
+    AND {column} = '{value}';
+    """
+    df = pd.read_csv(query=query,engine=engine)
+    response_data = df.iloc[0, 0]
+    return response_data
 
 def data_insert_infoTable(data_dict, engine):
     """
@@ -154,6 +168,16 @@ data['vh_mapping_newFile'] = new_total_data_count_vervotech_mapping_using_last_u
 
 # ------------------------------ Live data content update status for vervotech mapping table ---------------------------------
 data['contentUpdatingStatus'] = live_data_uploading_function(table="vervotech_mapping", engine=engine)
+
+
+# ------------------------------ Get Agoda And Hotelbed hotelInformation.
+data
+
+
+
+
+
+
 
 # Insert all the data into a single row in the table
 data_insert_infoTable(data, engine)
