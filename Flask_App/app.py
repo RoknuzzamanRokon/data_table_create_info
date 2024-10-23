@@ -23,6 +23,7 @@ def index():
     latest_record['vh_update_newFile_updateSuccess'] = int(latest_record['vh_update_newFile_updateSuccess'])
     latest_record['vh_update_newFile_updateSkipping'] = int(latest_record['vh_update_newFile_updateSkipping'])
     latest_record['vh_mapping_newFile'] = int(latest_record['vh_mapping_newFile'])
+
     
     live_updates = live_data_uploading_function(table='vervotech_mapping', engine=engine) 
     return render_template('index.html', latest_record=latest_record, live_updates=live_updates)
@@ -60,7 +61,11 @@ def fetch_latest_record(engine):
                     'vh_mapping_newFile': latest_record[12],
                     'created_at': latest_record[13],
                     'ModifiedOn': latest_record[14],
-                    'contentUpdatingStatus': latest_record[15]
+                    'contentUpdatingStatus': latest_record[15],
+                    'Agoda_newData': latest_record[16],
+                    'Agoda_updateData': latest_record[17],
+                    'Hotelbeds_newData': latest_record[18],
+                    'Hotelbeds_updateData': latest_record[19]
                 }
 
                 return record_dict
