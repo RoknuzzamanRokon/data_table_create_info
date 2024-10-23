@@ -110,9 +110,10 @@ def get_updateData_from_lastDate_select_tableAndColumn(table, column, value, eng
     )
     AND {column} = '{value}';
     """
-    df = pd.read_csv(query=query,engine=engine)
+    df = pd.read_sql(query,engine)
     response_data = df.iloc[0, 0]
     return response_data
+
 
 def data_insert_infoTable(data_dict, engine):
     """
@@ -170,10 +171,12 @@ data['vh_mapping_newFile'] = new_total_data_count_vervotech_mapping_using_last_u
 data['contentUpdatingStatus'] = live_data_uploading_function(table="vervotech_mapping", engine=engine)
 
 
-# ------------------------------ Get Agoda And Hotelbed hotelInformation.
-data
+# ------------------------------ Get Agoda And Hotelbed hotelInformation ------------------------------------------------------
+data['Agoda_newData'] = get_updateData_from_lastDate_select_tableAndColumn(table='vervotech_hotel_map_new', column='ProviderFamily', value='Agoda', engine=engine)
+data['Agoda_updateData'] = get_updateData_from_lastDate_select_tableAndColumn(table='vervotech_hotel_map_update', column='ProviderFamily', value='Agoda', engine=engine)
 
-
+data['Hotelbeds_newData'] = get_updateData_from_lastDate_select_tableAndColumn(table='vervotech_hotel_map_new', column='ProviderFamily', value='Hotelbeds', engine=engine)
+data['Hotelbeds_updateData'] = get_updateData_from_lastDate_select_tableAndColumn(table='vervotech_hotel_map_update', column='ProviderFamily', value='Hotelbeds', engine=engine)
 
 
 
