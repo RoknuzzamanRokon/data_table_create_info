@@ -41,8 +41,8 @@
       <table>
         <thead>
           <tr>
-            <th>Total Done</th>
-            <th>Last Update</th>
+            <th>TotalDone</th>
+            <th>LastUpdate</th>
           </tr>
         </thead>
         <tbody>
@@ -60,9 +60,9 @@
             <th>Total</th>
             <th>New</th>
             <th>Processing</th>
-            <th>Update Success</th>
-            <th>Skipping Data</th>
-            <th>Last Update</th>
+            <th>UpdateSuccess</th>
+            <th>SkippingData</th>
+            <th>LastUpdate</th>
           </tr>
         </thead>
         <tbody>
@@ -88,11 +88,11 @@
         <thead>
             <tr>
                 <th>Total</th>
-                <th>Update New</th>
+                <th>UpdateNew</th>
                 <th>Processing</th>
-                <th>Update Success</th>
-                <th>Skipping Data</th>
-                <th>Last Update</th>
+                <th>UpdateSuccess</th>
+                <th>SkippingData</th>
+                <th>LastUpdate</th>
             </tr>
         </thead>
         <tbody>
@@ -118,9 +118,9 @@
         <thead>
           <tr>
             <th>Total</th>
-            <th>New Data</th>
-            <th>Update Data</th>
-            <th>Last Update</th>
+            <th>NewData</th>
+            <th>UpdateData</th>
+            <th>LastUpdate</th>
           </tr>
         </thead>
         <tbody>
@@ -141,27 +141,30 @@
 
 
 
-      <h2>Supper Wise New and Updated Cunt
+      <h2>Supper Wise New and Updated Count
       </h2>
       <table>
         <thead>
           <tr>
             <th>Name</th>
-            <th>New Data</th>
-            <th>Update Data</th>
+            <th>NewData</th>
+            <th>UpdateData</th>
+            <th>LastUpdate</th>
           </tr>
 
         </thead>
         <tbody>
           <tr>
             <td>Agoda</td>
-            <td>0</td>
-            <td>0</td>
+            <td>{{ latest_record.Agoda_newData }}</td>
+            <td>{{ latest_record.Agoda_updateData }}</td>
+            <td>{{ latest_record.vh_new_newFile_lastUpdate_dateTime }}</td>
           </tr>
             <tr>
             <td>Hotelbeds</td>
-            <td>0</td>
-            <td>0</td>
+            <td>{{ latest_record.Hotelbeds_newData }}</td>
+            <td>{{ latest_record.Hotelbeds_updateData }}</td>
+            <td>{{ latest_record.vh_update_newFile_lastUpdate_dateTime }}</td>
           </tr>
         </tbody>
       </table>
