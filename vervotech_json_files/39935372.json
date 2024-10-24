@@ -1,0 +1,16 @@
+[
+    {
+        "Id": 8254,
+        "VervotechId": "39935372",
+        "ProviderHotelId": "1265152",
+        "ProviderFamily": "Agoda",
+        "status": "Skipping data"
+    },
+    {
+        "Id": 8315,
+        "VervotechId": "39935372",
+        "ProviderHotelId": "1265152",
+        "ProviderFamily": "Agoda",
+        "status": "Skipping data"
+    }
+]
