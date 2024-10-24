@@ -33,7 +33,7 @@ def new_group_data(table, engine):
     GROUP BY ProviderFamily;
     """
     df = pd.read_sql(query, engine)
-    return df  # Returning the dataframe with grouped data
+    return df  
 
 
 name = new_group_data(table='vervotech_hotel_map_new', engine=engine)

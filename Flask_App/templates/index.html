@@ -139,35 +139,26 @@
         </tbody>
       </table>
 
-
-
-      <h2>Supper Wise New and Updated Count
-      </h2>
-      <table>
+    <h2>Supplier Wise New and Updated Count--- by date - {{ latest_record.vh_new_newFile_lastUpdate_dateTime }}</h2>
+    <table border="1">
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>NewData</th>
-            <th>UpdateData</th>
-            <th>LastUpdate</th>
-          </tr>
-
+            <tr>
+                <th>Provider Family</th>
+                <th>New Data</th>
+                <th>Update Data</th>
+            </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Agoda</td>
-            <td>{{ latest_record.Agoda_newData }}</td>
-            <td>{{ latest_record.Agoda_updateData }}</td>
-            <td>{{ latest_record.vh_new_newFile_lastUpdate_dateTime }}</td>
-          </tr>
+            {% for row in group_data %}
             <tr>
-            <td>Hotelbeds</td>
-            <td>{{ latest_record.Hotelbeds_newData }}</td>
-            <td>{{ latest_record.Hotelbeds_updateData }}</td>
-            <td>{{ latest_record.vh_update_newFile_lastUpdate_dateTime }}</td>
-          </tr>
+                <td>{{ row.ProviderFamily }}</td>
+                <td>{{ row.value_count_new }}</td>
+                <td>{{ row.value_count_update }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
-      </table>
+    </table>
+
 
     </div>
   </body>
